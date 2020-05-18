@@ -5,6 +5,7 @@ import { useColorMode } from "theme-ui";
 
 import Section from "@components/Section";
 import Logo from "@components/Logo";
+import Menu from "@components/Menu"
 
 import Icons from "@icons";
 import mediaqueries from "@styles/media";
@@ -107,41 +108,46 @@ const NavigationHeader: React.FC<{}> = () => {
   }, []);
 
   return (
-    <Section>
-      <NavContainer>
-        <LogoLink
-          to={rootPath || basePath}
-          data-a11y="false"
-          title="Navigate back to the homepage"
-          aria-label="Navigate back to the homepage"
-          back={showBackArrow ? "true" : "false"}
-        >
-          {showBackArrow && (
-            <BackArrowIconContainer>
-              <Icons.ChevronLeft fill={fill} />
-            </BackArrowIconContainer>
-          )}
-          <Logo fill={fill} />
-          <Hidden>Navigate back to the homepage</Hidden>
-        </LogoLink>
-        <NavControls>
-          {showBackArrow ? (
-            <button
-              onClick={() => navigate(previousPath)}
-              title="Navigate back to the homepage"
-              aria-label="Navigate back to the homepage"
-            >
-              <Icons.Ex fill={fill} />
-            </button>
-          ) : (
-            <>
-              <SharePageButton />
-              <DarkModeToggle />
-            </>
-          )}
-        </NavControls>
-      </NavContainer>
-    </Section>
+    <>
+      <Section>
+        <NavContainer>
+          <LogoLink
+            to={rootPath || basePath}
+            data-a11y="false"
+            title="Navigate back to the homepage"
+            aria-label="Navigate back to the homepage"
+            back={showBackArrow ? "true" : "false"}
+          >
+            {showBackArrow && (
+              <BackArrowIconContainer>
+                <Icons.ChevronLeft fill={fill} />
+              </BackArrowIconContainer>
+            )}
+            <Logo fill={fill} />
+            <Hidden>Navigate back to the homepage</Hidden>
+          </LogoLink>
+          <NavControls>
+            {showBackArrow ? (
+              <button
+                onClick={() => navigate(previousPath)}
+                title="Navigate back to the homepage"
+                aria-label="Navigate back to the homepage"
+              >
+                <Icons.Ex fill={fill} />
+              </button>
+            ) : (
+              <>
+                <SharePageButton />
+                <DarkModeToggle />
+              </>
+            )}
+          </NavControls>
+        </NavContainer>
+      </Section>
+      <Section>
+        <Menu/ >
+      </Section>
+    </>
   );
 };
 

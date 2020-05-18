@@ -13,6 +13,7 @@ const templates = {
   articles: path.resolve(templatesDirectory, 'articles.template.tsx'),
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
+  menu: path.resolve(templatesDirectory, 'menu.template.tsx'),
 };
 
 const query = require('../data/data.query');
@@ -62,6 +63,11 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       site {
         siteMetadata {
           siteUrl
+          menuItems {
+            name
+            slug
+            identifier
+          }
         }
       }
     }
@@ -212,7 +218,6 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     if (next.length === 1 && articlesThatArentSecret.length !== 2)
       next = [...next, articlesThatArentSecret[0]];
     if (articlesThatArentSecret.length === 1) next = [];
-
     createPage({
       path: article.slug,
       component: templates.article,
@@ -260,5 +265,34 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         },
       });
     });
+  }
+
+
+  /**
+   * Dynamic Menu's Page Creation
+   */
+  if (data.site.siteMetadata.menuItems.length > 0) {
+    data.site.siteMetadata.menuItems.forEach(menu => {
+    
+      const menuArticles = articles.filter(article => {
+        return article.menu.includes(menu.identifier === '' ? menu.slug: menu.identifier);
+      });
+
+      log('Creating menu page', menu.name);
+
+      createPaginatedPages({
+        edges: menuArticles,
+        pathPrefix: menu.slug,
+        createPage,
+        pageLength,
+        pageTemplate: templates.menu,
+        buildPath: buildPaginatedPath,
+        context: {
+          basePath,
+          skip: pageLength,
+          limit: pageLength,
+        },
+      });
+    })
   }
 };

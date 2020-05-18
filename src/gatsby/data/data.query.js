@@ -29,6 +29,7 @@ module.exports.local = {
           dateForSEO: date
           timeToRead
           excerpt
+          menu
           canonical_url
           subscription
           body

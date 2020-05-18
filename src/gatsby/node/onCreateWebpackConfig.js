@@ -9,6 +9,7 @@ module.exports = ({ actions }) => {
         '@styles': path.resolve(__dirname, '../../styles/'),
         '@utils': path.resolve(__dirname, '../../utils/'),
         '@types': path.resolve(__dirname, '../../types/'),
+        '@sections': path.resolve(__dirname, '../../sections')
       },
       extensions: ['.js', '.json', '.ts', '.tsx'],
     },

@@ -15,14 +15,14 @@ import HorizontalRule from "@components/HorizontalRule";
 import Lists from "@components/Lists";
 import Paragraph from "@components/Paragraph";
 import Tables from "@components/Tables";
-import { ImageZoom } from "@components/Image";
+import {MdxImg} from "@components/Image";
 import Figcaption from "@components/Figcaption";
 
 import mediaqueries from "@styles/media";
 import { toKebabCase } from "@utils";
 
 const components = {
-  img: ImageZoom,
+  img: MdxImg,
   a: Anchor,
   blockquote: Blockquote,
   h1: Headings.h2, // h1 reserved article title
@@ -237,7 +237,7 @@ const ImageCSS = css`
     margin: 15px auto 50px;
     border-radius: 5px;
     width: 100%;
-    max-width: 680px;
+    max-width: ${IMAGE_WIDTHS.regular};
 
     ${mediaqueries.tablet`
       margin: 10px auto 45px;

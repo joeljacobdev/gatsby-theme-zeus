@@ -25,7 +25,7 @@ const Logo: Icon = ({ fill = "black" }) => {
             width="300%"
             height="300%"
           >
-            <feFlood result="color1" flood-color="#777"></feFlood>
+            <feFlood result="color1" floodColor="#777"></feFlood>
             <feConvolveMatrix
               order="6,6"
               divisor="1"
@@ -83,7 +83,7 @@ const Logo: Icon = ({ fill = "black" }) => {
             width="300%"
             height="300%"
           >
-            <feFlood result="color1" flood-color="#777"></feFlood>
+            <feFlood result="color1" floodColor="#777"></feFlood>
             <feConvolveMatrix
               order="4,4"
               divisor="1"

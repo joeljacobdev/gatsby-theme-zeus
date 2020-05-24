@@ -58,6 +58,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     mailchimp = '',
   } = themeOptions;
 
+  console.log("create pages");
   const { data } = await graphql(`
     query siteQuery {
       site {
@@ -72,6 +73,19 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       }
     }
   `);
+
+  const menuItems = await graphql(`
+  query allMenus {
+    allMenuItem {
+      nodes {
+        name
+        id
+        slug
+        identifier
+      }
+    }
+  }  
+  `)
 
   console.log(sources);
   // Defaulting to look at the local MDX files as sources.
@@ -267,15 +281,18 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     });
   }
 
-
   /**
    * Dynamic Menu's Page Creation
    */
-  if (data.site.siteMetadata.menuItems.length > 0) {
-    data.site.siteMetadata.menuItems.forEach(menu => {
-    
+  if (menuItems.data.allMenuItem.nodes.length > 0) {
+    menuItems.data.allMenuItem.nodes.forEach(menu => {
+      // skip if homepage
+      console.log(menu.identifier)
+      if (menu.slug === '' && menu.identifier === '')
+        return;
+
       const menuArticles = articles.filter(article => {
-        return article.menu.includes(menu.identifier === '' ? menu.slug: menu.identifier);
+        return article.menu.includes(menu.identifier === '' ? menu.slug : menu.identifier);
       });
 
       log('Creating menu page', menu.name);

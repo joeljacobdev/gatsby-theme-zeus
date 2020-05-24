@@ -45,6 +45,16 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     return `/${arguments_.join('/')}`.replace(/\/\/+/g, '/');
   }
 
+  function getMenuIdentifier(menu) {
+    if (menu.identifier) {
+      return menu.identifier.toLowerCase();
+    }
+    if (menu.slug) {
+      return menu.slug.toLowerCase();
+    } 
+    return menu.name.toLowerCase();
+  }
+
   // ///////////////////////////////////////////////////////
 
   if (node.internal.type === `AuthorsYaml`) {
@@ -74,19 +84,17 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     });
 
     createParentChildLink({ parent: fileNode, child: node });
-
-    return;
-  }
-
-  if (node.internal.type === `Mdx` && source === contentPath) {
+  } else if (node.internal.type === `Mdx` && source === contentPath) {
     const fieldData = {
       author: node.frontmatter.author,
       date: node.frontmatter.date,
       hero: node.frontmatter.hero,
+      contentType: node.frontmatter.contentType,
       menu: node.frontmatter.menu || [],
       secret: node.frontmatter.secret || false,
       slug: generateSlug(
         basePath,
+        node.frontmatter.contentType || '',
         generateArticlePermalink(
           slugify(node.frontmatter.slug || node.frontmatter.title, {lower: true}),
           node.frontmatter.date,
@@ -115,9 +123,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     });
 
     createParentChildLink({ parent: fileNode, child: node });
-  }
-
-  if (node.internal.type === `ContentfulAuthor`) {
+  } else if (node.internal.type === `ContentfulAuthor`) {
     createNodeField({
       node,
       name: `slug`,
@@ -129,5 +135,30 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       name: `authorsPage`,
       value: themeOptions.authorsPage || false,
     });
+  } else if (node.internal.type === `Site`) {
+    const {menuItems} = node.siteMetadata;
+    if (Array.isArray(menuItems)) {
+      menuItems.forEach(menu => {
+        const { name, slug } = menu
+        const id = getMenuIdentifier(menu)
+        createNode({
+          name,
+          slug: slug === '' ? '/' : `/${slug}/`,
+          identifier: id,
+          id: createNodeId(id),
+          parent: null,
+          children: [],
+          internal: {
+            type: `MenuItem`,
+            contentDigest: crypto
+              .createHash(`md5`)
+              .update(JSON.stringify(menu))
+              .digest(`hex`),
+            content: JSON.stringify(menu),
+            description: `Menu Item`,
+          },
+        })
+      })
+    }
   }
 };

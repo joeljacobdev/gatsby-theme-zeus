@@ -13,14 +13,5 @@ module.exports = ({ actions }) => {
       timeToRead: Int
       canonical_url: String
     }
-    type SiteSiteMetadata @infer {
-      menuItems: [MenuItem]
-    }
-    type MenuItem implements Node @infer {
-      id: ID!,
-      name: String!,
-      slug: String,
-      identifier: String
-    }
   `);
 };

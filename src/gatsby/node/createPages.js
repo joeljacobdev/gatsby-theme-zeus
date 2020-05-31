@@ -288,7 +288,6 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   if (menuItems.data.allMenuItem.nodes.length > 0) {
     menuItems.data.allMenuItem.nodes.forEach(menu => {
       // skip if homepage
-      console.log(menu.identifier)
       if (menu.slug === '' && menu.identifier === '')
         return;
 
@@ -317,5 +316,5 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   createPage({
     path: `/404/`,
     component: templates.notfound,
-  })
+  });
 };

@@ -14,6 +14,7 @@ const templates = {
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
   menu: path.resolve(templatesDirectory, 'menu.template.tsx'),
+  notfound: path.resolve(templatesDirectory, '404.template.js'),
 };
 
 const query = require('../data/data.query');
@@ -312,4 +313,9 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       });
     })
   }
+
+  createPage({
+    path: `/404/`,
+    component: templates.notfound,
+  })
 };

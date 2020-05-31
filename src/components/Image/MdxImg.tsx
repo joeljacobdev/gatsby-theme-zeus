@@ -25,7 +25,7 @@ const MdxImg: React.FC<{}> = props => {
 	);
   if (!image) {
     return null;
-	}
+  }
 	return <Img fluid={image.node.fluid} alt={alt} />;
 }
 

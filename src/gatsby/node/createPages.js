@@ -15,6 +15,7 @@ const templates = {
   author: path.resolve(templatesDirectory, 'author.template.tsx'),
   menu: path.resolve(templatesDirectory, 'menu.template.tsx'),
   notfound: path.resolve(templatesDirectory, '404.template.js'),
+  single: path.resolve(templatesDirectory, 'single.template.tsx'),
 };
 
 const query = require('../data/data.query');
@@ -27,6 +28,16 @@ function buildPaginatedPath(index, basePath) {
     return index > 1 ? `${basePath}page/${index}` : basePath;
   }
   return index > 1 ? `${basePath}/page/${index}` : basePath;
+}
+
+function getMenuIdentifier(menu) {
+  if (menu.identifier) {
+    return menu.identifier.toLowerCase();
+  }
+  if (menu.slug) {
+    return menu.slug.toLowerCase().replace(/\//g, );
+  } 
+  return menu.name.toLowerCase();
 }
 
 function slugify(string, base) {
@@ -83,6 +94,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         id
         slug
         identifier
+        single
       }
     }
   }  
@@ -153,7 +165,9 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     ...dataSources.netlify.articles,
   ].sort(byDate);
 
-  const articlesThatArentSecret = articles.filter(article => !article.secret);
+  // TODOL later use MenuItem single instead of showInHome
+  const articlesThatArentSecret = articles.filter(article => !article.secret)
+                                          .filter(article => article.showInHome);
 
   // Combining together all the authors from different sources
   authors = getUniqueListBy(
@@ -180,7 +194,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
    * /articles/page/1
    * ...
    */
-  log('Creating', 'articles page');
+  log('Creating articles page', articlesThatArentSecret.length);
   createPaginatedPages({
     edges: articlesThatArentSecret,
     pathPrefix: basePath,
@@ -222,33 +236,44 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       `);
     }
 
-    /**
-     * We need a way to find the next artiles to suggest at the bottom of the articles page.
-     * To accomplish this there is some special logic surrounding what to show next.
-     */
-    let next = articlesThatArentSecret.slice(index + 1, index + 3);
-    // If it's the last item in the list, there will be no articles. So grab the first 2
-    if (next.length === 0) next = articlesThatArentSecret.slice(0, 2);
-    // If there's 1 item in the list, grab the first article
-    if (next.length === 1 && articlesThatArentSecret.length !== 2)
-      next = [...next, articlesThatArentSecret[0]];
-    if (articlesThatArentSecret.length === 1) next = [];
-    createPage({
-      path: article.slug,
-      component: templates.article,
-      context: {
-        article,
-        authors: authorsThatWroteTheArticle,
-        basePath,
-        permalink: `${data.site.siteMetadata.siteUrl}${article.slug}/`,
-        slug: article.slug,
-        id: article.id,
-        title: article.title,
-        canonicalUrl: article.canonical_url,
-        mailchimp,
-        next,
-      },
-    });
+    if (article.template) {
+      log(`Found template ${article.template} for article ${article.title}`);
+      createPage({
+        path: article.slug,
+        component: templates[`${article.template}`],
+        context: {
+          article
+        }
+      });
+    } else {
+      /**
+       * We need a way to find the next artiles to suggest at the bottom of the articles page.
+       * To accomplish this there is some special logic surrounding what to show next.
+       */
+      let next = articlesThatArentSecret.slice(index + 1, index + 3);
+      // If it's the last item in the list, there will be no articles. So grab the first 2
+      if (next.length === 0) next = articlesThatArentSecret.slice(0, 2);
+      // If there's 1 item in the list, grab the first article
+      if (next.length === 1 && articlesThatArentSecret.length !== 2)
+        next = [...next, articlesThatArentSecret[0]];
+      if (articlesThatArentSecret.length === 1) next = [];
+      createPage({
+        path: article.slug,
+        component: templates.article,
+        context: {
+          article,
+          authors: authorsThatWroteTheArticle,
+          basePath,
+          permalink: `${data.site.siteMetadata.siteUrl}${article.slug}/`,
+          slug: article.slug,
+          id: article.id,
+          title: article.title,
+          canonicalUrl: article.canonical_url,
+          mailchimp,
+          next,
+        },
+      });
+    }
   });
 
   /**
@@ -288,28 +313,29 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   if (menuItems.data.allMenuItem.nodes.length > 0) {
     menuItems.data.allMenuItem.nodes.forEach(menu => {
       // skip if homepage
-      if (menu.slug === '' && menu.identifier === '')
+      if (menu.slug === '/' || menu.identifier === '')
         return;
 
       const menuArticles = articles.filter(article => {
-        return article.menu.includes(menu.identifier === '' ? menu.slug : menu.identifier);
+        return article.menu.includes(menu.identifier);
       });
 
       log('Creating menu page', menu.name);
-
-      createPaginatedPages({
-        edges: menuArticles,
-        pathPrefix: menu.slug,
-        createPage,
-        pageLength,
-        pageTemplate: templates.menu,
-        buildPath: buildPaginatedPath,
-        context: {
-          basePath,
-          skip: pageLength,
-          limit: pageLength,
-        },
-      });
+      if (menu.single === false) {
+        createPaginatedPages({
+          edges: menuArticles,
+          pathPrefix: menu.slug,
+          createPage,
+          pageLength,
+          pageTemplate: templates.menu,
+          buildPath: buildPaginatedPath,
+          context: {
+            basePath,
+            skip: pageLength,
+            limit: pageLength,
+          },
+        });
+      }
     })
   }
 

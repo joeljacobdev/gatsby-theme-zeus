@@ -9,6 +9,8 @@ module.exports = ({ actions }) => {
       excerpt(pruneLength: Int = 140): String!
       body: String!
       menu: [String!]
+      template: String
+      showInHome: Boolean
       hero: File @fileByRelativePath
       timeToRead: Int
       canonical_url: String

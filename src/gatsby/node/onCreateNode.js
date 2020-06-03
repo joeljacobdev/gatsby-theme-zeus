@@ -90,6 +90,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       date: node.frontmatter.date,
       hero: node.frontmatter.hero,
       menu: node.frontmatter.menu || [],
+      template: node.frontmatter.template || '',
+      showInHome: node.frontmatter.showInHome !== false,
       secret: node.frontmatter.secret || false,
       slug: generateSlug(
         basePath,
@@ -137,12 +139,13 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     const {menuItems} = node.siteMetadata;
     if (Array.isArray(menuItems)) {
       menuItems.forEach(menu => {
-        const { name, slug } = menu
-        const id = getMenuIdentifier(menu)
+        const { name, slug, single } = menu;
+        const id = getMenuIdentifier(menu);
         createNode({
           name,
           slug: slug === '' ? '/' : `/${slug}/`,
           identifier: id,
+          single: single === true,
           id: createNodeId(id),
           parent: null,
           children: [],
@@ -155,8 +158,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
             content: JSON.stringify(menu),
             description: `Menu Item`,
           },
-        })
-      })
+        });
+      });
     }
   }
 };

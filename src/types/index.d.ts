@@ -80,3 +80,9 @@ export type Template = React.FC<{
   };
   location: Location;
 }>
+
+export type SingleTemplate = React.FC<{
+  pageContext: {
+    article: IArticle;
+  };
+}>

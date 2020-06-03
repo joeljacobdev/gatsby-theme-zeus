@@ -30,6 +30,8 @@ module.exports.local = {
           timeToRead
           excerpt
           menu
+          template
+          showInHome
           canonical_url
           subscription
           body

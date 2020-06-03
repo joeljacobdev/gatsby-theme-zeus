@@ -27,6 +27,8 @@ module.exports = ({ actions, schema }) => {
       id: ID!,
       name: String!,
       slug: String,
+      single: Boolean,
+      showInHome: Boolean,
       identifier: String
     }
   `,
@@ -43,11 +45,17 @@ module.exports = ({ actions, schema }) => {
               throw new Error(`${item} is not a valid identifier`);
             }
             return item;
-          })
-          if (menus) {
+          });
+          if (!menus) {
             return [];
           }
           return menus;
+        }
+      },
+      template: {
+        type: 'String',
+        resolve: (source, args, context, info) => {
+          return source.template;
         }
       }
     }

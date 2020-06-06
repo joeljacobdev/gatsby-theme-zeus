@@ -237,7 +237,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     }
 
     if (article.template) {
-      log(`Found template ${article.template} for article ${article.title}`);
+      log(`Found template ${article.template} for article`, article.title);
       createPage({
         path: article.slug,
         component: templates[`${article.template}`],

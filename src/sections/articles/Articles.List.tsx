@@ -4,8 +4,8 @@ import { css } from '@emotion/core';
 import { Link } from 'gatsby';
 
 import Headings from '@components/Headings';
-import Image, { ImagePlaceholder } from '@components/Image';
-
+import { ImagePlaceholder } from '@components/Image';
+import Img from 'gatsby-image'
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
 
@@ -102,7 +102,7 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
     <ArticleLink to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
-          {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
+          {hasHeroImage ? <Img fluid={imageSource} /> : <ImagePlaceholder />}
         </ImageContainer>
         <div>
           <Title dark hasOverflow={hasOverflow} gridLayout={gridLayout}>

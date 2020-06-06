@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import mediaqueries from "@styles/media";
 
 import Section from "@components/Section";
 import SEO from "@components/SEO";
@@ -16,12 +17,13 @@ const MenuPage: Template = ({ location, pageContext }) => {
   return (
     <Layout>
       <SEO pathname={location.pathname} />
-      <Section><h1></h1></Section>
       <Section narrow>
+        <ListWrapper>
         <ArticlesList articles={articles} />
         <ArticlesPaginator show={pageContext.pageCount > 1}>
           <Paginator {...pageContext} />
         </ArticlesPaginator>
+        </ListWrapper>
       </Section>
       <ArticlesGradient />
     </Layout>
@@ -29,6 +31,12 @@ const MenuPage: Template = ({ location, pageContext }) => {
 };
 
 export default MenuPage;
+
+const ListWrapper = styled.div`
+  ${mediaqueries.desktop`
+    margin-top: 30px;
+  `}
+`
 
 const ArticlesGradient = styled.div`
   position: absolute;
@@ -43,5 +51,5 @@ const ArticlesGradient = styled.div`
 `;
 
 const ArticlesPaginator = styled.div<{ show: boolean }>`
-  ${p => p.show && `margin-top: 95px;`}
+  ${p => p.show && `margin-top: 50px;`}
 `;

@@ -10,7 +10,7 @@ const MenuItem: React.FC<{}> = ({ menu }) => {
     const isDark = colorMode === `dark`;
     return(
         <ItemWrapper isDark={isDark}>
-            <Link to={`${menu.slug}/`}>
+            <Link to={`${menu.slug}`}>
                 {menu.name}
             </Link>
         </ItemWrapper>

@@ -8,7 +8,7 @@ module.exports = ({ actions }) => {
       author: String!
       excerpt(pruneLength: Int = 140): String!
       body: String!
-      menu: [String!]
+      menu: [MenuItem!] @link(by: "identifier")
       template: String
       showInHome: Boolean
       hero: File @fileByRelativePath

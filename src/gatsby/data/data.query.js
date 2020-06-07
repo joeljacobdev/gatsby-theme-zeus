@@ -29,7 +29,10 @@ module.exports.local = {
           dateForSEO: date
           timeToRead
           excerpt
-          menu
+          menu {
+            name
+            identifier
+          }
           template
           showInHome
           canonical_url

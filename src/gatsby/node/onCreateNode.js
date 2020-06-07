@@ -45,16 +45,6 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     return `/${arguments_.join('/')}`.replace(/\/\/+/g, '/');
   }
 
-  function getMenuIdentifier(menu) {
-    if (menu.identifier) {
-      return menu.identifier.toLowerCase();
-    }
-    if (menu.slug) {
-      return menu.slug.toLowerCase();
-    } 
-    return menu.name.toLowerCase();
-  }
-
   // ///////////////////////////////////////////////////////
 
   if (node.internal.type === `AuthorsYaml`) {
@@ -140,13 +130,12 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     if (Array.isArray(menuItems)) {
       menuItems.forEach(menu => {
         const { name, slug, single } = menu;
-        const id = getMenuIdentifier(menu);
         createNode({
           name,
           slug: slug === '' ? '/' : `/${slug}/`,
-          identifier: id,
+          identifier: menu.identifier,
           single: single === true,
-          id: createNodeId(id),
+          id: createNodeId(menu.identifier),
           parent: null,
           children: [],
           internal: {

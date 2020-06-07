@@ -30,16 +30,6 @@ function buildPaginatedPath(index, basePath) {
   return index > 1 ? `${basePath}/page/${index}` : basePath;
 }
 
-function getMenuIdentifier(menu) {
-  if (menu.identifier) {
-    return menu.identifier.toLowerCase();
-  }
-  if (menu.slug) {
-    return menu.slug.toLowerCase().replace(/\//g, );
-  } 
-  return menu.name.toLowerCase();
-}
-
 function slugify(string, base) {
   const slug = string
     .toLowerCase()
@@ -70,17 +60,11 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     mailchimp = '',
   } = themeOptions;
 
-  console.log("create pages");
   const { data } = await graphql(`
     query siteQuery {
       site {
         siteMetadata {
           siteUrl
-          menuItems {
-            name
-            slug
-            identifier
-          }
         }
       }
     }
@@ -312,30 +296,28 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
    */
   if (menuItems.data.allMenuItem.nodes.length > 0) {
     menuItems.data.allMenuItem.nodes.forEach(menu => {
-      // skip if homepage
-      if (menu.slug === '/' || menu.identifier === '')
+      // skip if homepage, or single page
+      if (menu.slug === '/' || menu.identifier === '' || menu.single)
         return;
 
       const menuArticles = articles.filter(article => {
-        return article.menu.includes(menu.identifier);
+        return article.menu.some(articleMenu => menu.identifier === articleMenu.identifier);
       });
 
       log('Creating menu page', menu.name);
-      if (menu.single === false) {
-        createPaginatedPages({
-          edges: menuArticles,
-          pathPrefix: menu.slug,
-          createPage,
-          pageLength,
-          pageTemplate: templates.menu,
-          buildPath: buildPaginatedPath,
-          context: {
-            basePath,
-            skip: pageLength,
-            limit: pageLength,
-          },
-        });
-      }
+      createPaginatedPages({
+        edges: menuArticles,
+        pathPrefix: menu.slug,
+        createPage,
+        pageLength,
+        pageTemplate: templates.menu,
+        buildPath: buildPaginatedPath,
+        context: {
+          basePath,
+          skip: pageLength,
+          limit: pageLength,
+        },
+      });
     })
   }
 

@@ -74,22 +74,22 @@ const FooterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 80px;
+  padding-bottom: 50px;
   color: ${p => p.theme.colors.grey};
 
   ${mediaqueries.tablet`
     flex-direction: column;
-    padding-bottom: 100px;
+    padding-bottom: 40px;
   `}
 
   ${mediaqueries.phablet`
-    padding-bottom: 50px;
+    padding-bottom: 40px;
   `}
 `;
 
 const HoritzontalRule = styled.div`
   position: relative;
-  margin: 140px auto 50px;
+  margin: 50px auto;
   border-bottom: 1px solid ${p => p.theme.colors.horizontalRule};
 
   ${mediaqueries.tablet`
@@ -103,7 +103,7 @@ const HoritzontalRule = styled.div`
 
 const FooterText = styled.div`
   ${mediaqueries.tablet`
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   `}
 
   ${mediaqueries.phablet`

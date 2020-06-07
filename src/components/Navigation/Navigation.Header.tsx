@@ -116,31 +116,13 @@ const NavigationHeader: React.FC<{}> = () => {
             data-a11y="false"
             title="Navigate back to the homepage"
             aria-label="Navigate back to the homepage"
-            back={showBackArrow ? "true" : "false"}
           >
-            {showBackArrow && (
-              <BackArrowIconContainer>
-                <Icons.ChevronLeft fill={fill} />
-              </BackArrowIconContainer>
-            )}
             <Logo fill={fill} />
             <Hidden>Navigate back to the homepage</Hidden>
           </LogoLink>
           <NavControls>
-            {showBackArrow ? (
-              <button
-                onClick={() => navigate(previousPath)}
-                title="Navigate back to the homepage"
-                aria-label="Navigate back to the homepage"
-              >
-                <Icons.Ex fill={fill} />
-              </button>
-            ) : (
-              <>
-                <SharePageButton />
-                <DarkModeToggle />
-              </>
-            )}
+            <SharePageButton />
+            <DarkModeToggle />
           </NavControls>
         </NavContainer>
       </Section>
@@ -186,11 +168,11 @@ const NavContainer = styled.div`
   }
 `;
 
-const LogoLink = styled(Link)<{ back: string }>`
+const LogoLink = styled(Link)`
   position: relative;
   display: flex;
   align-items: center;
-  left: ${p => (p.back === "true" ? "-54px" : 0)};
+  left: 0;
 
   ${mediaqueries.desktop_medium`
     left: 0

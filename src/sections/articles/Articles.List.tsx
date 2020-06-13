@@ -76,8 +76,8 @@ const ArticlesList: React.FC<ArticlesListProps> = ({
             hasOnlyOneArticle={hasOnlyOneArticle}
             reverse={isEven}
           >
-            <ListItem article={ap[0]} narrow={isEven} />
-            <ListItem article={ap[1]} narrow={isOdd} />
+            <ListItem article={ap[0]} narrow={true} />
+            <ListItem article={ap[1]} narrow={true} />
           </List>
         );
       })}
@@ -92,7 +92,7 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
 
   const { gridLayout } = useContext(GridLayoutContext);
   const hasOverflow = narrow && article.title.length > 35;
-  const imageSource = narrow ? article.hero.narrow : article.hero.regular;
+  const imageSource = article.hero.narrow;
   const hasHeroImage =
     imageSource &&
     Object.keys(imageSource).length !== 0 &&
@@ -175,7 +175,7 @@ const listTile = p => css`
 
   ${mediaqueries.tablet`
     grid-template-columns: 1fr;
-    
+
     &:not(:last-child) {
       margin-bottom: 0;
     }
@@ -289,11 +289,11 @@ const Title = styled(Headings.h2)`
   `}
 
   ${mediaqueries.tablet`
-    font-size: 24px;  
+    font-size: 24px;
   `}
 
   ${mediaqueries.phablet`
-    font-size: 22px;  
+    font-size: 22px;
     padding: 30px 20px 0;
     margin-bottom: 10px;
     -webkit-line-clamp: 3;

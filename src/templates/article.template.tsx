@@ -8,13 +8,13 @@ import MDXRenderer from "@components/MDX";
 import Progress from "@components/Progress";
 import Section from "@components/Section";
 import Subscription from "@components/Subscription";
+import Comment from "@components/Comment";
 
 import mediaqueries from "@styles/media";
 import { debounce } from "@utils";
 
 import ArticleAside from "@sections/article/Article.Aside";
 import ArticleHero from "@sections/article/Article.Hero";
-import ArticleControls from "@sections/article/Article.Controls";
 import ArticlesNext from "@sections/article/Article.Next";
 import ArticleSEO from "@sections/article/Article.SEO";
 import ArticleShare from "@sections/article/Article.Share";
@@ -80,6 +80,10 @@ const Article: Template = ({ pageContext, location }) => {
     return () => window.removeEventListener("resize", calculateBodySize);
   }, []);
 
+  const disqusConfig = {
+    identifier: article.slug, title: article.title
+  };
+
   return (
     <Layout>
       <ArticleSEO article={article} authors={authors} location={location} />
@@ -87,9 +91,6 @@ const Article: Template = ({ pageContext, location }) => {
       <ArticleAside contentHeight={contentHeight}>
         <Progress contentHeight={contentHeight} />
       </ArticleAside>
-      <MobileControls>
-        <ArticleControls />
-      </MobileControls>
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
           <ArticleShare />
@@ -103,22 +104,12 @@ const Article: Template = ({ pageContext, location }) => {
           <FooterSpacer />
         </NextArticle>
       )}
+      <Comment config={disqusConfig}/>
     </Layout>
   );
 };
 
 export default Article;
-
-const MobileControls = styled.div`
-  position: relative;
-  padding-top: 60px;
-  transition: background 0.2s linear;
-  text-align: center;
-
-  ${mediaqueries.tablet_up`
-    display: none;
-  `}
-`;
 
 const ArticleBody = styled.article`
   position: relative;
@@ -129,7 +120,7 @@ const ArticleBody = styled.article`
   ${mediaqueries.desktop`
     padding-left: 53px;
   `}
-  
+
   ${mediaqueries.tablet`
     padding: 70px 0 80px;
   `}
@@ -146,7 +137,7 @@ const NextArticle = styled(Section)`
 const FooterNext = styled.h3`
   position: relative;
   opacity: 0.25;
-  margin-bottom: 100px;
+  margin-bottom: 65px;
   font-weight: 400;
   color: ${p => p.theme.colors.primary};
 
@@ -179,4 +170,8 @@ const FooterNext = styled.h3`
 
 const FooterSpacer = styled.div`
   margin-bottom: 65px;
+
+  ${mediaqueries.tablet`
+    margin-bottom: 60px;
+  `}
 `;

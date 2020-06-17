@@ -82,9 +82,9 @@ const SubscriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 64px 0 55px;
-  margin: 10px auto 100px;
+  margin: 40px auto 40px;
   background: ${p => p.theme.colors.card};
-  box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 50px rgba(0, 0, 0, 0.05);
   z-index: 1;
 
   ${mediaqueries.tablet`

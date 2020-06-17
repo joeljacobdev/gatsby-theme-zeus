@@ -4,7 +4,6 @@ import { css } from "@emotion/core";
 import { Link } from "gatsby";
 
 import Headings from "@components/Headings";
-import Image from "@components/Image";
 
 import mediaqueries from "@styles/media";
 
@@ -48,7 +47,6 @@ const GridItem: React.FC<GridItemProps> = ({ article, narrow }) => {
   if (!article) return null;
 
   const hasOverflow = narrow && article.title.length > 35;
-  const imageSource = article.hero.narrow;
 
   return (
     <ArticleLink
@@ -57,9 +55,6 @@ const GridItem: React.FC<GridItemProps> = ({ article, narrow }) => {
       narrow={narrow ? "true" : "false"}
     >
       <Item>
-        <ImageContainer>
-          <Image src={imageSource} />
-        </ImageContainer>
         <Title dark hasOverflow={hasOverflow}>
           {article.title}
         </Title>

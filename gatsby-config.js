@@ -164,5 +164,11 @@ module.exports = ({
         displayName: process.env.NODE_ENV === `development`,
       },
     },
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: process.env.GATSBY_DISQUS_NAME !== undefined ? process.env.GATSBY_DISQUS_NAME :``,
+      }
+    },
   ],
 });

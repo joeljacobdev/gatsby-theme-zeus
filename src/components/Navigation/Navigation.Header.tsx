@@ -127,7 +127,7 @@ const NavigationHeader: React.FC<{}> = () => {
         </NavContainer>
       </Section>
       <Section>
-        <Menu/ >
+        <Menu/>
       </Section>
     </>
   );

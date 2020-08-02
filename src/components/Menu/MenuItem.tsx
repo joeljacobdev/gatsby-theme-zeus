@@ -18,14 +18,14 @@ const MenuItem: React.FC<{}> = ({ menu }) => {
 }
 
 const ItemWrapper = styled.div`
-    padding: 1rem 2rem;
+    padding: 2rem;
     display: inline;
 
     a {
         font-weight: 600;
         font-size: 2.5rem;
         font-family: ${props => props.theme.fonts.sansSerif};
-        color: ${props => (props.isDark ? "#fff" : "#000")}; 
+        color: ${props => (props.isDark ? "#fff" : "#000")};
     }
 
     a::hover {

@@ -86,10 +86,10 @@ const Logo: Icon = ({fill = "black"}) => {
 export default Logo
 
 const LogoContainer = styled.div`
-
-  ${mediaqueries.tablet`
+  
+  @media screen and (max-width: 900px) {
     .Logo__Desktop {
       display: none;
     }
-  `}
+  }
 `

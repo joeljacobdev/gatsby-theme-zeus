@@ -115,16 +115,12 @@ const NavContainer = styled.div`
   position: relative;
   z-index: 100;
   margin: 0 50px;
-  padding-top: 100px;
+  padding-top: 10px;
   display: flex;
   justify-content: space-between;
 
-  ${mediaqueries.desktop_medium`
-    padding-top: 50px;
-  `};
-
-  @media screen and (max-height: 800px) {
-    padding-top: 50px;
+  @media screen and (min-width: 600px) {
+    padding-top: 30px;
   }
 `;
 

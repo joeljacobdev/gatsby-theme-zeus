@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { useColorMode } from "theme-ui";
 
 import { Link } from 'gatsby';
-import mediaqueries from "../../styles/media";
 
 
 const MenuItem: React.FC<{}> = ({ menu }) => {
@@ -11,11 +10,7 @@ const MenuItem: React.FC<{}> = ({ menu }) => {
     const isDark = colorMode === `dark`;
     return(
         <ItemWrapper isDark={isDark}>
-            <Link
-              to={`${menu.slug}`}
-              aria-label={`Go to ${menu.name}`}
-              title={`Go to ${menu.name}`}
-            >
+            <Link to={`${menu.slug}`}>
                 {menu.name}
             </Link>
         </ItemWrapper>
@@ -23,23 +18,19 @@ const MenuItem: React.FC<{}> = ({ menu }) => {
 }
 
 const ItemWrapper = styled.div`
-    padding: 2rem;
+    padding: 1rem 2rem;
     display: inline;
 
     a {
         font-weight: 600;
         font-size: 2.5rem;
         font-family: ${props => props.theme.fonts.sansSerif};
-        color: ${props => (props.isDark ? "#fff" : "#000")};
-
-        &:hover {
-          color: red;
-        }
+        color: ${props => (props.isDark ? "#fff" : "#000")}; 
     }
 
-    ${mediaqueries.tablet`
-      padding: 0.25rem 1rem;
-    `};
+    a::hover {
+        color: red;
+    }
 `
 
 export default MenuItem

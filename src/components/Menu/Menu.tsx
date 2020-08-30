@@ -38,11 +38,8 @@ const MenuItemsWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
-
     ${mediaqueries.tablet`
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
+        display: none;
     `}
 `
 export default Menu;

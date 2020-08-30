@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { Link, navigate, graphql, useStaticQuery } from "gatsby";
+import { Link, graphql, useStaticQuery } from "gatsby";
 import { useColorMode } from "theme-ui";
 
-import Section from "@components/Section";
 import Logo from "@components/Logo";
-import Menu from "@components/Menu"
+import Menu from "@components/Menu";
+import {SideMenu} from "@components/Menu";
 
-import Icons from "@icons";
 import mediaqueries from "@styles/media";
 import {
-  copyToClipboard,
   getWindowDimensions,
   getBreakpointFromTheme,
 } from "@utils";
@@ -49,42 +47,10 @@ const DarkModeToggle: React.FC<{}> = () => {
   );
 };
 
-const SharePageButton: React.FC<{}> = () => {
-  const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? "#fff" : "#000";
-
-  function copyToClipboardOnClick() {
-    if (hasCopied) return;
-
-    copyToClipboard(window.location.href);
-    setHasCopied(true);
-
-    setTimeout(() => {
-      setHasCopied(false);
-    }, 1000);
-  }
-
-  return (
-    <IconWrapper
-      isDark={isDark}
-      onClick={copyToClipboardOnClick}
-      data-a11y="false"
-      aria-label="Copy URL to clipboard"
-      title="Copy URL to clipboard"
-    >
-      <Icons.Link fill={fill} />
-      <ToolTip isDark={isDark} hasCopied={hasCopied}>
-        Copied
-      </ToolTip>
-    </IconWrapper>
-  );
-};
-
 const NavigationHeader: React.FC<{}> = () => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
+  const [navOpen, setNavOpen] = useState<boolean>(false);
   const { sitePlugin } = useStaticQuery(siteQuery);
 
   const [colorMode] = useColorMode();
@@ -109,28 +75,37 @@ const NavigationHeader: React.FC<{}> = () => {
 
   return (
     <>
-      <Section>
+      <div>
         <NavContainer>
-          <LogoLink
-            to={rootPath || basePath}
-            data-a11y="false"
-            title="Navigate back to the homepage"
-            aria-label="Navigate back to the homepage"
-          >
-            <Logo fill={fill} />
-            <Hidden>Navigate back to the homepage</Hidden>
-          </LogoLink>
-          <NavControls>
-            <SharePageButton />
-            <DarkModeToggle />
-          </NavControls>
+            <LogoLink
+              to={rootPath || basePath}
+              data-a11y="false"
+              title="Navigate back to the homepage"
+              aria-label="Navigate back to the homepage"
+            >
+              <Logo fill={fill} />
+              <Hidden>Navigate back to the homepage</Hidden>
+            </LogoLink>
+            <NavMenuContainer>
+              <Menu />
+              <MenuToggle
+                className={navOpen?"open":""}
+                onClick={() => setNavOpen(!navOpen)}
+                data-a11y="false"
+                aria-label="Toggle menu"
+                title="Toggle menu"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </MenuToggle>
+              <DarkModeToggle />
+            </NavMenuContainer>
         </NavContainer>
-      </Section>
-      <Section>
-        <Menu/>
-      </Section>
+        <SideMenu isVisible={navOpen}/>
+      </div>
     </>
-  );
+  )
 };
 
 export default NavigationHeader;
@@ -155,17 +130,18 @@ const BackArrowIconContainer = styled.div`
 const NavContainer = styled.div`
   position: relative;
   z-index: 100;
-  padding-top: 100px;
+  margin: 0 50px;
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
 
-  ${mediaqueries.desktop_medium`
-    padding-top: 50px;
-  `};
-
-  @media screen and (max-height: 800px) {
-    padding-top: 50px;
+  @media screen and (min-width: 600px) {
+    padding: 20px 0;
   }
+`;
+
+const NavMenuContainer = styled.div`
+  display: flex;
 `;
 
 const LogoLink = styled(Link)`
@@ -197,43 +173,6 @@ const LogoLink = styled(Link)`
   }
 `;
 
-const NavControls = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  ${mediaqueries.phablet`
-    right: -5px;
-  `}
-`;
-
-const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
-  position: absolute;
-  padding: 4px 13px;
-  background: ${p => (p.isDark ? "#000" : "rgba(0,0,0,0.1)")};
-  color: ${p => (p.isDark ? "#fff" : "#000")};
-  border-radius: 5px;
-  font-size: 14px;
-  top: -35px;
-  opacity: ${p => (p.hasCopied ? 1 : 0)};
-  transform: ${p => (p.hasCopied ? "translateY(-3px)" : "none")};
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -6px;
-    margin: 0 auto;
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid ${p => (p.isDark ? "#000" : "rgba(0,0,0,0.1)")};
-  }
-`;
-
 const IconWrapper = styled.button<{ isDark: boolean }>`
   opacity: 0.5;
   position: relative;
@@ -244,7 +183,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s ease;
-  margin-left: 30px;
+  margin: 2.2rem 1rem;
 
   &:hover {
     opacity: 1;
@@ -266,7 +205,6 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
     display: inline-flex;
     transform: scale(0.708);
     margin-left: 10px;
-
 
     &:hover {
       opacity: 0.5;
@@ -341,12 +279,98 @@ const MoonMask = styled.div<{ isDark: boolean }>`
   transition: ${p => p.theme.colorModeTransition}, transform 0.45s ease;
 `;
 
+// Based on codepen. https://codepen.io/designcouch/pen/Atyop
+const MenuToggle = styled.div`
+  width: 50px;
+  height: 35px;
+  position: relative;
+  margin: 20px auto;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+  display: none;
+  ${mediaqueries.tablet`
+    display: inline;
+  `}
+
+  span {
+    display: block;
+    position: absolute;
+    height: 7px;
+    width: 100%;
+    background: ${p => p.theme.colors.primary};
+    border-radius: 7px;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
+  };
+
+  span:nth-child(1) {
+    top: 0;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+
+  span:nth-child(2) {
+    top: 14px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+
+  span:nth-child(3) {
+    top: 28px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+  &.open {
+    span:nth-child(1) {
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+      top: -4px;
+      left: 7px;
+    }
+    span:nth-child(2) {
+      width: 0%;
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      top: 31px;
+      left: 7px;
+    }
+}
+`
+
 const Hidden = styled.span`
   position: absolute;
   display: inline-block;
   opacity: 0;
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   visibility: hidden;
   overflow: hidden;
 `;

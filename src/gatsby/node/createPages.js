@@ -81,7 +81,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         single
       }
     }
-  }  
+  }
   `)
 
   console.log(sources);

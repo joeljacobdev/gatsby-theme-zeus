@@ -4,7 +4,8 @@ import { Link, graphql, useStaticQuery } from "gatsby";
 import { useColorMode } from "theme-ui";
 
 import Logo from "@components/Logo";
-import Menu from "@components/Menu"
+import Menu from "@components/Menu";
+import {SideMenu} from "@components/Menu";
 
 import mediaqueries from "@styles/media";
 import {
@@ -49,6 +50,7 @@ const DarkModeToggle: React.FC<{}> = () => {
 const NavigationHeader: React.FC<{}> = () => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
+  const [navOpen, setNavOpen] = useState<boolean>(false);
   const { sitePlugin } = useStaticQuery(siteQuery);
 
   const [colorMode] = useColorMode();
@@ -73,21 +75,35 @@ const NavigationHeader: React.FC<{}> = () => {
 
   return (
     <>
-      <NavContainer>
-        <LogoLink
-          to={rootPath || basePath}
-          data-a11y="false"
-          title="Navigate back to the homepage"
-          aria-label="Navigate back to the homepage"
-        >
-          <Logo fill={fill} />
-          <Hidden>Navigate back to the homepage</Hidden>
-        </LogoLink>
-        <NavMenuContainer>
-          <Menu/>
-          <DarkModeToggle />
-        </NavMenuContainer>
-      </NavContainer>
+      <div>
+        <NavContainer>
+            <LogoLink
+              to={rootPath || basePath}
+              data-a11y="false"
+              title="Navigate back to the homepage"
+              aria-label="Navigate back to the homepage"
+            >
+              <Logo fill={fill} />
+              <Hidden>Navigate back to the homepage</Hidden>
+            </LogoLink>
+            <NavMenuContainer>
+              <Menu />
+              <MenuToggle
+                className={navOpen?"open":""}
+                onClick={() => setNavOpen(!navOpen)}
+                data-a11y="false"
+                aria-label="Toggle menu"
+                title="Toggle menu"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </MenuToggle>
+              <DarkModeToggle />
+            </NavMenuContainer>
+        </NavContainer>
+        <SideMenu isVisible={navOpen}/>
+      </div>
     </>
   )
 };
@@ -115,12 +131,12 @@ const NavContainer = styled.div`
   position: relative;
   z-index: 100;
   margin: 0 50px;
-  padding-top: 10px;
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
 
   @media screen and (min-width: 600px) {
-    padding-top: 30px;
+    padding: 20px 0;
   }
 `;
 
@@ -189,7 +205,6 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
     display: inline-flex;
     transform: scale(0.708);
     margin-left: 10px;
-
 
     &:hover {
       opacity: 0.5;
@@ -263,6 +278,92 @@ const MoonMask = styled.div<{ isDark: boolean }>`
   opacity: ${p => (p.isDark ? 0 : 1)};
   transition: ${p => p.theme.colorModeTransition}, transform 0.45s ease;
 `;
+
+// Based on codepen. https://codepen.io/designcouch/pen/Atyop
+const MenuToggle = styled.div`
+  width: 50px;
+  height: 35px;
+  position: relative;
+  margin: 20px auto;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+  display: none;
+  ${mediaqueries.tablet`
+    display: inline;
+  `}
+
+  span {
+    display: block;
+    position: absolute;
+    height: 7px;
+    width: 100%;
+    background: ${p => p.theme.colors.primary};
+    border-radius: 7px;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
+  };
+
+  span:nth-child(1) {
+    top: 0;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+
+  span:nth-child(2) {
+    top: 14px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+
+  span:nth-child(3) {
+    top: 28px;
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center;
+  }
+  &.open {
+    span:nth-child(1) {
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+      top: -4px;
+      left: 7px;
+    }
+    span:nth-child(2) {
+      width: 0%;
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      top: 31px;
+      left: 7px;
+    }
+}
+`
 
 const Hidden = styled.span`
   position: absolute;

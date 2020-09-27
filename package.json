@@ -66,6 +66,8 @@
     "gatsby-transformer-sharp": "^2.2.4",
     "gatsby-transformer-yaml": "^2.2.4",
     "lodash": "^4.17.15",
+    "prism-react-renderer": "^1.1.1",
+    "prismjs": "^1.21.0",
     "react-helmet": "^5.2.1",
     "react-medium-image-zoom": "^4.0.2",
     "react-outside-click-handler": "^1.2.4",

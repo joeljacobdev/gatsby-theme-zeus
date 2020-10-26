@@ -17,12 +17,12 @@ const siteQuery = graphql`
   }
 `;
 
-const SideMenu: React.FC<{isVisible: boolean}> = ({isVisible = false}) => {
+const SideMenu: React.FC<{isVisible: boolean, setNavOpen: Function}> = ({isVisible = false,}) => {
   const results = useStaticQuery(siteQuery);
   return(
     isVisible ?
       <SideMenuItemsWrapper>
-        <MenuItems menus={results.allMenuItem.nodes} />
+        <MenuItems menus={results.allMenuItem.nodes}/>
       </SideMenuItemsWrapper> :
       null
   )

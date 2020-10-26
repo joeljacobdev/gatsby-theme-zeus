@@ -1,12 +1,15 @@
 import React from "react";
+import { connect } from 'react-redux';
+
 import styled from "@emotion/styled";
 import { useColorMode } from "theme-ui";
 
 import { Link } from 'gatsby';
 import mediaqueries from "../../styles/media";
+import {toggleSideMenu} from "../../state/actions/menu";
 
 
-const MenuItem: React.FC<{}> = ({ menu }) => {
+const MenuItem: React.FC<{}> = ({ menu, toggleSideMenu }) => {
     const [colorMode] = useColorMode();
     const isDark = colorMode === `dark`;
     return(
@@ -15,6 +18,7 @@ const MenuItem: React.FC<{}> = ({ menu }) => {
               to={`${menu.slug}`}
               aria-label={`Go to ${menu.name}`}
               title={`Go to ${menu.name}`}
+              onClick={() => toggleSideMenu(false)}
             >
                 {menu.name}
             </Link>
@@ -42,4 +46,8 @@ const ItemWrapper = styled.div`
     `};
 `
 
-export default MenuItem
+const mapDispatchToProps = dispatch => ({
+    toggleSideMenu: (isSideMenuOpened) => dispatch(toggleSideMenu(isSideMenuOpened)),
+});
+
+export default connect(null, mapDispatchToProps)(MenuItem);

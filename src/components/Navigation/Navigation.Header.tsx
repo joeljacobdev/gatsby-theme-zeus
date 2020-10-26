@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+
 import styled from "@emotion/styled";
 import { Link, graphql, useStaticQuery } from "gatsby";
 import { useColorMode } from "theme-ui";
@@ -12,6 +14,7 @@ import {
   getWindowDimensions,
   getBreakpointFromTheme,
 } from "@utils";
+import {toggleSideMenu} from "../../state/actions/menu";
 
 const siteQuery = graphql`
   {
@@ -47,10 +50,9 @@ const DarkModeToggle: React.FC<{}> = () => {
   );
 };
 
-const NavigationHeader: React.FC<{}> = () => {
+const NavigationHeader: React.FC<{}> = ({isSideMenuOpened, toggleSideMenu}) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
-  const [navOpen, setNavOpen] = useState<boolean>(false);
   const { sitePlugin } = useStaticQuery(siteQuery);
 
   const [colorMode] = useColorMode();
@@ -89,8 +91,8 @@ const NavigationHeader: React.FC<{}> = () => {
             <NavMenuContainer>
               <Menu />
               <MenuToggle
-                className={navOpen?"open":""}
-                onClick={() => setNavOpen(!navOpen)}
+                className={isSideMenuOpened?"open":""}
+                onClick={() => toggleSideMenu(!isSideMenuOpened)}
                 data-a11y="false"
                 aria-label="Toggle menu"
                 title="Toggle menu"
@@ -102,13 +104,19 @@ const NavigationHeader: React.FC<{}> = () => {
               <DarkModeToggle />
             </NavMenuContainer>
         </NavContainer>
-        <SideMenu isVisible={navOpen}/>
+        <SideMenu isVisible={isSideMenuOpened}/>
       </div>
     </>
   )
 };
 
-export default NavigationHeader;
+const mapStateToProps = ({ isSideMenuOpened }) => ({ isSideMenuOpened });
+
+const mapDispatchToProps = dispatch => ({
+  toggleSideMenu: (isSideMenuOpened) => dispatch(toggleSideMenu(isSideMenuOpened)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationHeader);
 
 const BackArrowIconContainer = styled.div`
   transition: 0.2s transform var(--ease-out-quad);
@@ -318,7 +326,7 @@ const MenuToggle = styled.div`
     transition: .25s ease-in-out;
   };
 
-  span:nth-child(1) {
+  span:nth-of-type(1) {
     top: 0;
     -webkit-transform-origin: left center;
     -moz-transform-origin: left center;
@@ -326,7 +334,7 @@ const MenuToggle = styled.div`
     transform-origin: left center;
   }
 
-  span:nth-child(2) {
+  span:nth-of-type(2) {
     top: 14px;
     -webkit-transform-origin: left center;
     -moz-transform-origin: left center;
@@ -334,7 +342,7 @@ const MenuToggle = styled.div`
     transform-origin: left center;
   }
 
-  span:nth-child(3) {
+  span:nth-of-type(3) {
     top: 28px;
     -webkit-transform-origin: left center;
     -moz-transform-origin: left center;
@@ -342,7 +350,7 @@ const MenuToggle = styled.div`
     transform-origin: left center;
   }
   &.open {
-    span:nth-child(1) {
+    span:nth-of-type(1) {
       -webkit-transform: rotate(45deg);
       -moz-transform: rotate(45deg);
       -o-transform: rotate(45deg);
@@ -350,11 +358,11 @@ const MenuToggle = styled.div`
       top: -4px;
       left: 7px;
     }
-    span:nth-child(2) {
+    span:nth-of-type(2) {
       width: 0%;
       opacity: 0;
     }
-    span:nth-child(3) {
+    span:nth-of-type(3) {
       -webkit-transform: rotate(-45deg);
       -moz-transform: rotate(-45deg);
       -o-transform: rotate(-45deg);

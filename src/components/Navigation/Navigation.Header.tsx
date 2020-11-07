@@ -211,7 +211,6 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
 
   ${mediaqueries.tablet`
     display: inline-flex;
-    transform: scale(0.708);
     margin-left: 10px;
 
     &:hover {

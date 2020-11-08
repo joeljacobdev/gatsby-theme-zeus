@@ -17,7 +17,6 @@ import ArticleAside from "@sections/article/Article.Aside";
 import ArticleHero from "@sections/article/Article.Hero";
 import ArticlesNext from "@sections/article/Article.Next";
 import ArticleSEO from "@sections/article/Article.SEO";
-import ArticleShare from "@sections/article/Article.Share";
 
 import { Template } from "@types";
 
@@ -92,9 +91,7 @@ const Article: Template = ({ pageContext, location }) => {
         <Progress contentHeight={contentHeight} />
       </ArticleAside>
       <ArticleBody ref={contentSectionRef}>
-        <MDXRenderer content={article.body}>
-          <ArticleShare />
-        </MDXRenderer>
+        <MDXRenderer content={article.body} />
       </ArticleBody>
       {mailchimp && article.subscription && <Subscription />}
       {next.length > 0 && (
@@ -113,7 +110,7 @@ export default Article;
 
 const ArticleBody = styled.article`
   position: relative;
-  padding: 160px 0 35px;
+  padding: 70px 0 35px;
   padding-left: 68px;
   transition: background 0.2s linear;
 
@@ -122,11 +119,11 @@ const ArticleBody = styled.article`
   `}
 
   ${mediaqueries.tablet`
-    padding: 70px 0 80px;
+    padding: 60px 0 50px;
   `}
 
   ${mediaqueries.phablet`
-    padding: 60px 0;
+    padding: 50px 0;
   `}
 `;
 
@@ -137,12 +134,12 @@ const NextArticle = styled(Section)`
 const FooterNext = styled.h3`
   position: relative;
   opacity: 0.25;
-  margin-bottom: 65px;
+  margin-bottom: 35px;
   font-weight: 400;
   color: ${p => p.theme.colors.primary};
 
   ${mediaqueries.tablet`
-    margin-bottom: 60px;
+    margin-bottom: 30px;
   `}
 
   &::after {

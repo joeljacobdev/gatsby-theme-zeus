@@ -6,39 +6,22 @@ import MDXRenderer from "@components/MDX";
 import Headings from '@components/Headings';
 
 import mediaqueries from "@styles/media";
-import ArticleControls from "@sections/article/Article.Controls";
-
 import { Template } from "@types";
 
-const Single: Template = ({ pageContext, location }) => {
+const Single: Template = ({ pageContext }) => {
   const contentSectionRef = useRef<HTMLElement>(null);
   const { article } = pageContext;
   return (
     <Layout>
-      <MobileControls>
-        <ArticleControls />
-      </MobileControls>
       <Heading>{article.title}</Heading>
       <ArticleBody ref={contentSectionRef}>
-        <MDXRenderer content={article.body}>
-        </MDXRenderer>
+        <MDXRenderer content={article.body} />
       </ArticleBody>
     </Layout>
   );
 };
 
 export default Single;
-
-const MobileControls = styled.div`
-  position: relative;
-  padding-top: 60px;
-  transition: background 0.2s linear;
-  text-align: center;
-
-  ${mediaqueries.tablet_up`
-    display: none;
-  `}
-`;
 
 const ArticleBody = styled.article`
   position: relative;

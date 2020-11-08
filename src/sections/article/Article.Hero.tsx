@@ -84,30 +84,26 @@ const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
 const Header = styled.header`
   position: relative;
   z-index: 10;
-  margin:100px auto 120px;
+  margin: 50px auto 60px;
   padding-left: 68px;
   max-width: 749px;
 
   ${mediaqueries.desktop`
     padding-left: 53px;
     max-width: calc(507px + 53px);
-    margin: 100px auto 70px;
+    margin: 40px auto 50px;
   `}
 
   ${mediaqueries.tablet`
     padding-left: 0;
-    margin: 100px auto 70px;
+    margin: 40px auto 50px;
     max-width: 480px;
   `}
 
   ${mediaqueries.phablet`
-    margin: 170px auto 180px;
+    margin: 70px auto 80px;
     padding: 0 40px;
   `}
-
-  @media screen and (max-height: 700px) {
-    margin: 100px auto;
-  }
 `;
 
 const HeroHeading = styled(Headings.h1)`

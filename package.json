@@ -69,7 +69,6 @@
     "prism-react-renderer": "^1.1.1",
     "prismjs": "^1.21.0",
     "react-helmet": "^5.2.1",
-    "react-medium-image-zoom": "^4.0.2",
     "react-outside-click-handler": "^1.2.4",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",

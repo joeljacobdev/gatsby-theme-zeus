@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {useRef, useState, useEffect} from "react";
 import styled from "@emotion/styled";
 import throttle from "lodash/throttle";
-import { graphql, useStaticQuery } from "gatsby";
+import {graphql, useStaticQuery} from "gatsby";
 
 import Layout from "@components/Layout";
 import MDXRenderer from "@components/MDX";
@@ -11,14 +11,14 @@ import Subscription from "@components/Subscription";
 import Comment from "@components/Comment";
 
 import mediaqueries from "@styles/media";
-import { debounce } from "@utils";
+import {debounce} from "@utils";
 
 import ArticleAside from "@sections/article/Article.Aside";
 import ArticleHero from "@sections/article/Article.Hero";
 import ArticlesNext from "@sections/article/Article.Next";
 import ArticleSEO from "@sections/article/Article.SEO";
 
-import { Template } from "@types";
+import {Template} from "@types";
 
 const siteQuery = graphql`
   {
@@ -34,7 +34,7 @@ const siteQuery = graphql`
   }
 `;
 
-const Article: Template = ({ pageContext, location }) => {
+const Article: Template = ({pageContext, location}) => {
   const contentSectionRef = useRef<HTMLElement>(null);
 
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
@@ -43,7 +43,7 @@ const Article: Template = ({ pageContext, location }) => {
   const results = useStaticQuery(siteQuery);
   const name = results.allSite.edges[0].node.siteMetadata.name;
 
-  const { article, authors, mailchimp, next } = pageContext;
+  const {article, authors, mailchimp, next} = pageContext;
 
   useEffect(() => {
     const calculateBodySize = throttle(() => {
@@ -85,20 +85,20 @@ const Article: Template = ({ pageContext, location }) => {
 
   return (
     <Layout>
-      <ArticleSEO article={article} authors={authors} location={location} />
-      <ArticleHero article={article} authors={authors} />
+      <ArticleSEO article={article} authors={authors} location={location}/>
+      <ArticleHero article={article} authors={authors}/>
       <ArticleAside contentHeight={contentHeight}>
-        <Progress contentHeight={contentHeight} />
+        <Progress contentHeight={contentHeight}/>
       </ArticleAside>
       <ArticleBody ref={contentSectionRef}>
-        <MDXRenderer content={article.body} />
+        <MDXRenderer content={article.body}/>
       </ArticleBody>
-      {mailchimp && article.subscription && <Subscription />}
+      {mailchimp && article.subscription && <Subscription/>}
       {next.length > 0 && (
         <NextArticle narrow>
           <FooterNext>More articles from {name}</FooterNext>
-          <ArticlesNext articles={next} />
-          <FooterSpacer />
+          <ArticlesNext articles={next}/>
+          <FooterSpacer/>
         </NextArticle>
       )}
       <Comment config={disqusConfig}/>
@@ -110,8 +110,7 @@ export default Article;
 
 const ArticleBody = styled.article`
   position: relative;
-  padding: 70px 0 35px;
-  padding-left: 68px;
+  padding: 70px 0 35px 68px;
   transition: background 0.2s linear;
 
   ${mediaqueries.desktop`

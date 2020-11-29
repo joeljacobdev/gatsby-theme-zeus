@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { Link } from 'gatsby';
 
-import Headings from '@components/Headings';
-import { ImagePlaceholder } from '@components/Image';
+import Headings from '@components/headings/Headings';
+import ImagePlaceholder from '@components/image/Image.Placeholder';
 import Img from 'gatsby-image'
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
@@ -30,7 +30,7 @@ const ArticlesList: React.FC<ArticlesListProps> = ({
       alwaysShowAllDetails={alwaysShowAllDetails}
     >
       {articles.map((ap, index) =>
-        <ListItem article={ap} narrow={true} />
+        <ListItem key={index} article={ap} narrow={true} />
       )}
     </ArticlesListContainer>
   );
@@ -102,7 +102,6 @@ const Item = styled.div`
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 488px;
   grid-column-gap: 96px;
-  grid-template-rows: 1;
   align-items: center;
   position: relative;
   margin-bottom: 50px;

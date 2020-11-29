@@ -4,7 +4,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { useColorMode } from "theme-ui";
 import { Link } from "gatsby";
 
-import Image from "@components/Image";
+import Image from "@components/image/Image";
 import Icons from "@icons";
 import mediaqueries from "@styles/media";
 import { IAuthor } from "@types";

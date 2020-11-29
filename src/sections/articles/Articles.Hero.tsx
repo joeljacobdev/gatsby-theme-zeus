@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import Section from '@components/Section';
-import Bio from '@components/Bio';
+import Section from '@components/section/Section';
+import Bio from '@components/bio/Bio';
 import mediaqueries from '@styles/media';
 import { IAuthor } from '@types';
 

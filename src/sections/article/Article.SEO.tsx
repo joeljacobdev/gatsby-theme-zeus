@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SEO from '@components/SEO';
+import SEO from '@components/seo/SEO';
 
 import { IArticle, IAuthor } from '@types';
 import { graphql, useStaticQuery } from 'gatsby';

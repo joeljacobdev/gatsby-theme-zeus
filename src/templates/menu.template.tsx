@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import mediaqueries from "@styles/media";
 
-import Section from "@components/Section";
-import SEO from "@components/SEO";
-import Layout from "@components/Layout";
-import Paginator from "@components/Navigation/Navigation.Paginator";
+import Section from "@components/section/Section";
+import SEO from "@components/seo/SEO";
+import Layout from "@components/layout/layout";
+import Paginator from "@components/navigation/Navigation.Paginator";
 
 import ArticlesList from "../sections/articles/Articles.List";
 

@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import styled from "@emotion/styled";
 
-import Layout from "@components/Layout";
-import MDXRenderer from "@components/MDX";
-import Headings from '@components/Headings';
+import Layout from "@components/layout/layout";
+import MDXRenderer from "@components/mdx/mdx";
+import Headings from '@components/headings/headings';
 
 import mediaqueries from "@styles/media";
 import { Template } from "@types";
@@ -32,7 +32,7 @@ const ArticleBody = styled.article`
   ${mediaqueries.desktop`
     padding-left: 53px;
   `}
-  
+
   ${mediaqueries.tablet`
     padding: 35px 0 80px;
   `}

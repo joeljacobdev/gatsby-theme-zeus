@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/core";
 import { Link } from "gatsby";
 
-import Headings from "@components/Headings";
+import Headings from "@components/headings/headings";
 
 import mediaqueries from "@styles/media";
 
@@ -97,7 +97,7 @@ const Grid = styled.div<{ numberOfArticles: number }>`
 
 const Item = styled.div`
   position: relative;
-  
+
   ${mediaqueries.tablet`
     margin-bottom: 10px;
   `}

@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import Headings from '@components/Headings';
-import Image, { ImagePlaceholder } from '@components/Image';
+import Headings from '@components/headings/headings';
+import Image from '@components/image/Image';
+import ImagePlaceholder from '@components/image/Image.Placeholder';
 
 import mediaqueries from '@styles/media';
 import { IArticle, IAuthor } from '@types';

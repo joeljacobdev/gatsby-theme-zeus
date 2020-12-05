@@ -23,16 +23,12 @@ const Menu: React.FC<{}> = () => {
     const results = useStaticQuery(siteQuery);
     return(
         <MenuItemsWrapper>
-            <MenuItems menus={results.allMenuItem.nodes} />
+            {results.allMenuItem.nodes.map(function(menu) {
+                return <MenuItem key={menu.id} menu={menu} />
+            })}
         </MenuItemsWrapper>
     )
 };
-
-const MenuItems: React.FC<{}> = ({ menus }) => {
-    return menus.map(function(menu) {
-        return <MenuItem key={menu.id} menu={menu} />
-    })
-}
 
 const MenuItemsWrapper = styled.div`
     display: flex;

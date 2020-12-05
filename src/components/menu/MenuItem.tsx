@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { useColorMode } from "theme-ui";
 
 import { Link } from 'gatsby';
-import mediaqueries from "../../styles/media";
+import mediaqueries from "@styles/media";
 import {toggleSideMenu} from "../../state/actions/menu";
 
 
@@ -26,18 +26,22 @@ const MenuItem: React.FC<{}> = ({ menu, toggleSideMenu }) => {
     )
 }
 
-const ItemWrapper = styled.div`
+const mapDispatchToProps = dispatch => ({
+    toggleSideMenu: (isSideMenuOpened) => dispatch(toggleSideMenu(isSideMenuOpened)),
+});
+
+const ItemWrapper = styled.div<{theme, isDark}>`
     padding: 2rem;
     display: inline;
-
     a {
         font-weight: 600;
         font-size: 2.5rem;
         font-family: ${props => props.theme.fonts.sansSerif};
         color: ${props => (props.isDark ? "#fff" : "#000")};
+        transition: color 0.2s ease-in-out;
 
         &:hover {
-          color: red;
+          color: ${props => props.theme.colors.accent};
         }
     }
 
@@ -45,9 +49,5 @@ const ItemWrapper = styled.div`
       padding: 0.25rem 1rem;
     `};
 `
-
-const mapDispatchToProps = dispatch => ({
-    toggleSideMenu: (isSideMenuOpened) => dispatch(toggleSideMenu(isSideMenuOpened)),
-});
 
 export default connect(null, mapDispatchToProps)(MenuItem);

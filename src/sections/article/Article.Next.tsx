@@ -110,7 +110,7 @@ const Item = styled.div`
   }
 `;
 
-const Title = styled(Headings.h3)`
+const Title = styled(Headings.h3)<{theme}>`
   font-size: 22px;
   line-height: 1.4;
   margin-bottom: 10px;

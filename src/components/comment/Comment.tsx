@@ -7,11 +7,12 @@ import styled from "@emotion/styled";
 const Comment = ({config}) => {
   const [isLoaded, setLoading] = useState(false);
   useEffect(() => {
-    if (window && !window.document.getElementById('dsq-embed-scr')) {
+    if (window && !window.document.getElementById('dsq-embed-scr')
+      && process.env.GATSBY_DISQUS_NAME) {
       const target = window.document.getElementById('comment__container');
       const options = {
         root: null,
-        rootMargin: '0px',
+        rootMargin: '0% 0% 100% 0%',
         threshold: 0
       }
       const observer = new IntersectionObserver(function (entries, observer) {
@@ -23,7 +24,6 @@ const Comment = ({config}) => {
       observer.observe(target);
     }
   }, []);
-
   return <>{process.env.GATSBY_DISQUS_NAME &&
   <CommentContainer id="comment__container">
     {isLoaded

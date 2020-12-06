@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import Headings from '@components/headings/headings';
+import Headings from '@components/headings/Headings';
 import Image from '@components/image/Image';
 import ImagePlaceholder from '@components/image/Image.Placeholder';
 

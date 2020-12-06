@@ -7,21 +7,21 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/core";
 import { useColorMode } from "theme-ui";
 
-import Anchor from "@components/anchor/anchor";
-import Blockquote from "@components/blockquote/blockquote";
+import Anchor from "@components/anchor/Anchor";
+import Blockquote from "@components/blockquote/Blockquote";
 import CodePre from "@components/code/Code.Pre";
 import CodePrism from "@components/code/Code.Prism";
-import Headings from "@components/headings/headings";
+import Headings from "@components/headings/Headings";
 import HorizontalRule from "@components/horizontal-rule/HorizontalRule";
 import OrderedList from "@components/lists/List.Ordered";
 import UnorderedList from "@components/lists/List.Unordered";
-import Paragraph from "@components/paragraph/paragraph";
+import Paragraph from "@components/paragraph/Paragraph";
 import TableCell from "@components/tables/Table.Cell";
 import TableHeadCell from "@components/tables/Table.Head.Cell";
 import TableHead from "@components/tables/Table.Head";
 import Table from "@components/tables/Table";
 import MdxImg from "@components/image/MdxImg";
-import Figcaption from "@components/figcaption/figcaption";
+import Figcaption from "@components/figcaption/Figcaption";
 
 import mediaqueries from "@styles/media";
 import { toKebabCase } from "@utils";

@@ -2,7 +2,7 @@ import addToMailchimp from "gatsby-plugin-mailchimp";
 import React, { useState } from "react";
 
 import Section from "@components/section/Section";
-import Headings from "@components/headings/headings";
+import Headings from "@components/headings/Headings";
 
 import styled from "@emotion/styled";
 import mediaqueries from "@styles/media";

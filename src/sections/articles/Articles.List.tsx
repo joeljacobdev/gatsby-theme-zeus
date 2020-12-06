@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { Link } from 'gatsby';
 
-import Headings from '@components/headings/headings';
+import Headings from '@components/headings/Headings';
 import ImagePlaceholder from '@components/image/Image.Placeholder';
 import Img from 'gatsby-image'
 import mediaqueries from '@styles/media';

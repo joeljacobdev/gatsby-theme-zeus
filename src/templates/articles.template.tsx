@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import Section from "@components/section/Section";
 import SEO from "@components/seo/SEO";
-import Layout from "@components/layout/layout";
+import Layout from "@components/layout/Layout";
 import Paginator from "@components/navigation/Navigation.Paginator";
 
 import ArticlesHero from "../sections/articles/Articles.Hero";

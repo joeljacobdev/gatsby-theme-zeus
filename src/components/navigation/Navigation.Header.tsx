@@ -6,7 +6,7 @@ import { Link, graphql, useStaticQuery } from "gatsby";
 import { useColorMode } from "theme-ui";
 
 import Logo from "@components/logo/Logo";
-import Menu from "@components/menu/menu";
+import Menu from "@components/menu/Menu";
 import SideMenu from "@components/menu/SideMenu";
 
 import mediaqueries from "@styles/media";

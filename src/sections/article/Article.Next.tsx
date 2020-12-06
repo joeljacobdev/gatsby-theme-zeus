@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/core";
 import { Link } from "gatsby";
 
-import Headings from "@components/headings/headings";
+import Headings from "@components/headings/Headings";
 
 import mediaqueries from "@styles/media";
 
@@ -110,7 +110,7 @@ const Item = styled.div`
   }
 `;
 
-const Title = styled(Headings.h3)`
+const Title = styled(Headings.h3)<{theme}>`
   font-size: 22px;
   line-height: 1.4;
   margin-bottom: 10px;

@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import styled from "@emotion/styled";
 
-import Layout from "@components/layout/layout";
-import MDXRenderer from "@components/mdx/mdx";
-import Headings from '@components/headings/headings';
+import Layout from "@components/layout/Layout";
+import MDXRenderer from "@components/mdx/MDX";
+import Headings from '@components/headings/Headings';
 
 import mediaqueries from "@styles/media";
 import { Template } from "@types";

@@ -3,12 +3,12 @@ import styled from "@emotion/styled";
 import throttle from "lodash/throttle";
 import {graphql, useStaticQuery} from "gatsby";
 
-import Layout from "@components/layout/layout";
-import MDXRenderer from "@components/mdx/mdx";
-import Progress from "@components/progress/progress";
+import Layout from "@components/layout/Layout";
+import MDXRenderer from "@components/mdx/MDX";
+import Progress from "@components/progress/Progress";
 import Section from "@components/section/Section";
 import Subscription from "@components/subscription/Subscription";
-import Comment from "@components/comment/comment";
+import Comment from "@components/comment/Comment";
 
 import mediaqueries from "@styles/media";
 import {debounce} from "@utils";

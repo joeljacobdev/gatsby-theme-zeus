@@ -4,7 +4,7 @@ import mediaqueries from "@styles/media";
 
 import Section from "@components/section/Section";
 import SEO from "@components/seo/SEO";
-import Layout from "@components/layout/layout";
+import Layout from "@components/layout/Layout";
 import Paginator from "@components/navigation/Navigation.Paginator";
 
 import ArticlesList from "../sections/articles/Articles.List";
